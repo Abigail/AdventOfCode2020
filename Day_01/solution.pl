@@ -70,7 +70,7 @@ foreach my $N (@numbers) {
 OUTER:
   for (my $i = 0; $i < @numbers; $i ++) {
     for (my $j = $i + 1; $j < @numbers; $j ++) {
-        next OUTER if $numbers [$i] + $numbers [$j] > $YEAR * 2 / 3;
+        next OUTER if $numbers [$i] + 2 * $numbers [$j] > $YEAR;
         if ($numbers {$YEAR - $numbers [$i] - $numbers [$j]}) {
             $solution2 = $numbers [$i] *
                          $numbers [$j] *
