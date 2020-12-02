@@ -26,20 +26,22 @@ while (<$fh>) {
     $valid1 ++ if /^(?<min>    [0-9]+) \s* - \s*
                     (?<max>    [0-9]+) \s+
                     (?<letter> [a-z])  \s* : \s*
-                    (??{ "(?<notletters>(?[ [a-z] & [^$+{letter}]])*)"   .
-                         "(?:$+{letter}(?&notletters)){$+{min},$+{max}}" .
-                         "(?&notletters)" }) $/x;
+                    (??{ "(?<notletters>  (?[ [a-z] &  [^$+{letter}]])* )
+                          (?: $+{letter} (?&notletters)){$+{min},$+{max}}
+                          (?&notletters)" })
+                 $/x;
+
     $valid2 ++ if /^(?<min>    [0-9]+) \s* - \s*
                     (?<max>    [0-9]+) \s+
-                    (?<letter> [a-z])  \s* : \s+
-                    (??{ "[a-z]{@{[$+{min}-1]}}"             .
-                         "(?:[$+{letter}]"                   . 
-                             "[a-z]{@{[$+{max}-$+{min}-1]}}" .
-                             "(?[[a-z]&[^$+{letter}]])|"     .
-                           "(?[[a-z]&[^$+{letter}]])"        .
-                             "[a-z]{@{[$+{max}-$+{min}-1]}}" .
-                             "[$+{letter}])"                 .
-                         "[a-z]*" }) $/x;
+                    (?<letter> [a-z])  \s* : \s*
+                    (??{ "[a-z]{@{[$+{min}-1]}}
+                          (?:$+{letter}
+                              (?<minmax>    [a-z]{@{[$+{max}-$+{min}-1]}})
+                              (?<notletter> (?[ [a-z] & [^$+{letter}]]))   |
+                            (?&notletter)
+                              (?&minmax)
+                              $+{letter})
+                          [a-z]*" }) $/x;
 }
 
 say "Solution 1: ", $valid1;
