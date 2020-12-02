@@ -9,6 +9,38 @@ no  warnings 'syntax';
 use experimental 'signatures';
 use experimental 'lexical_subs';
 
+#
+# Challenge: (https://adventofcode.com/2020/day/2)
+#
+#   Given a list of password policies and passwords, count the number
+#   of passwords validating the policy.
+#   Input looks like:
+#
+#      NN-MM L: PPPP
+#
+#   where:
+#      NN:  A (minimum) number,  0 <  NN
+#      MM:  A (maximum) number, NN <= MM
+#       L:  A letter,           [a-z]
+#    PPPP:  A password,         [a-z]+
+#
+#   Part 1:
+#
+#      A password validates if L appears at least NN times in PPPP,
+#      but not more than MM times.
+#
+#   Part 2:
+#
+#      A password validates if L appears on position NN in PPPP, or
+#      if L appears on position MM in PPPP, but not both.
+#      Position are 1-based (that is, the first letter in PPPP is on
+#      position 1).
+#
+
+#
+# Blog: https://wp.me/pcxd30-9F
+#
+
 my $input = shift // "input";
 
 my $valid1 = 0;
