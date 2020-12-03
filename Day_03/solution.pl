@@ -10,6 +10,10 @@ use experimental 'signatures';
 use experimental 'lexical_subs';
 
 #
+# Blog: https://wp.me/pcxd30-aq
+#
+
+#
 # Challenge:
 #
 #    Given a map of open squares (.) and trees (#), determine the
