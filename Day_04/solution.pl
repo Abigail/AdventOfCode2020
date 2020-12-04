@@ -10,6 +10,10 @@ use experimental 'signatures';
 use experimental 'lexical_subs';
 
 #
+# Blog: https://wp.me/pcxd30-aW
+#
+
+#
 # Challenge
 #
 #   We are given passports which we need to validate. Passports
