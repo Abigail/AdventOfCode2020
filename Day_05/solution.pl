@@ -10,6 +10,10 @@ use experimental 'signatures';
 use experimental 'lexical_subs';
 
 #
+# Blog: https://wp.me/pcxd30-cd
+#
+
+#
 # Challenge
 #
 #   You are given a list of boarding passes.
