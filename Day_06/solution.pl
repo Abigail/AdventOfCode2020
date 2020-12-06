@@ -9,6 +9,10 @@ no  warnings 'syntax';
 use experimental 'signatures';
 use experimental 'lexical_subs';
 
+#
+# Blog: https://wp.me/pcxd30-dk
+#
+
 my $input = shift // "input";
 open my $fh, "<", $input or die "open: $!";
 $/ = "";
