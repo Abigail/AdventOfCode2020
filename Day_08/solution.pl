@@ -16,7 +16,7 @@ use experimental 'lexical_subs';
 my $input = shift // "input";
 open my $fh, "<", $input or die "open: $!";
 
-my $program;
+my $program;  # This will contain a list of instructions.
 
 #
 # Statement indices
