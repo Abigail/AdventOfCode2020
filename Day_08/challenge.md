@@ -13,7 +13,7 @@ code (your puzzle input) of the device. You should be able to fix
 it, but first you need to be able to run the code in isolation.
 
 The boot code is represented as a text file with one instruction
-per line of text. Each instruction consists of an operation (acc,
+per line of text. Each instruction consists of an operation (`acc`,
 `jmp`, or `nop`) and an argument (a signed number like `+4` or `-20`).
 
 * `acc` increases or decreases a single global value called the
@@ -58,19 +58,19 @@ jmp -4  | 5
 acc +6  |
 ~~~~
 
-First, the nop +0 does nothing. Then, the accumulator is increased
-from 0 to 1 (acc +1) and jmp +4 sets the next instruction to the
-other acc +1 near the bottom. After it increases the accumulator
-from 1 to 2, jmp -4 executes, setting the next instruction to the
-only acc +3. It sets the accumulator to 5, and jmp -3 causes the
-program to continue back at the first acc +1.
+First, the `nop +0` does nothing. Then, the accumulator is increased
+from `0` to `1` (`acc +1`) and `jmp +4` sets the next instruction to the
+other `acc +1` near the bottom. After it increases the accumulator
+from `1` to `2`, `jmp -4` executes, setting the next instruction to the
+only `acc +3`. It sets the accumulator to `5`, and `jmp -3` causes the
+program to continue back at the first `acc +1`.
 
 This is an infinite loop: with this sequence of jumps, the program
 will run forever. The moment the program tries to run any instruction
 a second time, you know it will never terminate.
 
 Immediately before the program would run an instruction a second
-time, the value in the accumulator is 5.
+time, the value in the accumulator is `5`.
 
 Run your copy of the boot code. Immediately before any instruction
 is executed a second time, what value is in the accumulator?
