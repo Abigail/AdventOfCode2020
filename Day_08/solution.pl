@@ -66,14 +66,14 @@ sub run_program ($program) {
     my $acc = 0;
     my $PC  = 0;
     my @been_here;  # Keep track of where we have been.
-    while (!$been_here [$PC] ++ && $PC < @$program) {
+    while (!$been_here [$PC] ++ && 0 <= $PC < @$program) {
         my ($instruction, $argument) =
                        @{$$program [$PC ++]} [$INSTRUCTION, $ARGUMENT];
 
         $acc += $argument,     next if $instruction == $ACC;
         $PC  += $argument - 1, next if $instruction == $JMP;
     }
-    return $acc, $PC < @$program ? $LOOPS : $TERMINATES;
+    return $acc, 0 <= $PC < @$program ? $LOOPS : $TERMINATES;
 }
 
 #
