@@ -12,6 +12,14 @@ use experimental 'lexical_subs';
 use Getopt::Long;
 
 #
+# Blog: https://wp.me/pcxd30-ew
+#
+
+#
+# For the challenge, see challenge.md
+#
+
+#
 # Parameter for buffer-size, so we can use the test example
 #
 GetOptions (
