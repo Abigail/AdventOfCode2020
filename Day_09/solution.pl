@@ -63,7 +63,7 @@ package Buffer {
         my $buffer = $buffer {$self};
         my $sums   = $sums   {$self};
         #
-        # Remove an number if the buffer is full
+        # Remove a number if the buffer is full
         #
         while (@$buffer > $size) {
             my $old = shift @$buffer;
