@@ -9,6 +9,15 @@ no  warnings 'syntax';
 use experimental 'signatures';
 use experimental 'lexical_subs';
 
+#
+# Blog: https://wp.me/pcxd30-eP
+#
+
+#
+# For challenge description, see challenge.md.
+# Advent of Code, Day 10: https://adventofcode.com/2020/day/10
+#
+
 my $max_jump = 3;
 
 #
