@@ -12,23 +12,23 @@ use experimental 'lexical_subs';
 my $max_jump = 3;
 
 #
-# Read the input, and put the adapters into an array after sorting. Add the
+# Read the input, and put the numbers into an array after sorting. Add the
 # outlet and build-in adaptor as well.
 #
 my $input = shift // "input";
 open my $fh, "<", $input or die "open: $!";
-chomp (my @adapters = sort {$a <=> $b} <$fh>);
-unshift @adapters => 0;
-push    @adapters => $max_jump + $adapters [-1];
+chomp (my @numbers = sort {$a <=> $b} <$fh>);
+unshift @numbers => 0;
+push    @numbers => $max_jump + $numbers [-1];
 
 #
 # Count the jumps.
 #
 my @jumps;
-for (my $i = 1; $i < @adapters; $i ++) {
-    $jumps [$adapters [$i] - $adapters [$i - 1]] ++;
+for (my $i = 1; $i < @numbers; $i ++) {
+    $jumps [$numbers [$i] - $numbers [$i - 1]] ++;
 }
-my $solution1 = $jumps [1] * $jumps [3];
+my $solution1 = $jumps [1] * $jumps [$max_jump];
 
 
 #
@@ -42,15 +42,13 @@ my $solution1 = $jumps [1] * $jumps [3];
 use List::Util qw [sum];
 
 my @counts;
-$counts [@adapters - 1] = 1;
-for (my $i = @adapters - 2; $i >= 0; $i --) {
+$counts [@numbers - 1] = 1;
+for (my $i = @numbers - 2; $i >= 0; $i --) {
     $counts [$i] = sum map {
-        $i + $_ >= @adapters || $adapters [$i + $_] >
-                                $adapters [$i] + $max_jump
+        $i + $_ >= @numbers || $numbers [$i + $_] >
+                               $numbers [$i] + $max_jump
         ? 0 : $counts [$i + $_]} 1 .. $max_jump;
 }
-                                   
-
 my $solution2 = $counts [0];
 
 say "Solution 1: ", $solution1;
