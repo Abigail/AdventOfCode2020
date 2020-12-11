@@ -9,7 +9,7 @@ no  warnings 'syntax';
 use experimental 'signatures';
 use experimental 'lexical_subs';
 
-my $NONE     = 0;
+my $FLOOR    = 0;
 my $EMPTY    = 1;
 my $OCCUPIED = 2;
 my $WALL     = 3;
@@ -20,7 +20,7 @@ open my $fh, "<", $input or die "open: $!";
 my $grid;
 while (<$fh>) {
     chomp;
-    push @$grid  => [map {$_ eq "." ? $NONE : $EMPTY} split //];
+    push @$grid  => [map {$_ eq "." ? $FLOOR : $EMPTY} split //];
 }
 
 #
@@ -78,7 +78,7 @@ sub run ($grid, $tolerance, $beam = 0) {
 
                         if ($beam) {
                             ($tx, $ty) = ($tx + $dx, $ty + $dy) while
-                                $$grid [$tx] [$ty] == $NONE;
+                                $$grid [$tx] [$ty] == $FLOOR;
                         }
 
                         $neighbours ++
