@@ -14,6 +14,10 @@ my $EMPTY    = 1;
 my $OCCUPIED = 2;
 my $WALL     = 3;
 
+#
+# Blog: https://wp.me/pcxd30-fk
+#
+
 my $input = shift // "input";
 open my $fh, "<", $input or die "open: $!";
 
