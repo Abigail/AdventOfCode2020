@@ -36,12 +36,6 @@ push @$grid => [($WALL) x scalar @{$$grid [0]}];
 
 
 #
-# Sizes
-#
-my $WIDTH  = @{$$grid [0]};
-my $HEIGHT = @$grid;
-
-#
 # Cardinal direction, given in [x, y] values, x, y in {-1, 0, 1}
 #
 my @directions = ([-1, -1], [-1,  0], [-1,  1],
