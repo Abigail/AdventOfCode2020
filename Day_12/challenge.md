@@ -14,7 +14,7 @@ sequence of single-character actions paired with integer input
 values. After staring at them for a few minutes, you work out what
 they probably mean:
 
-*   Action `N`` means to move north by the given value.
+*   Action `N` means to move north by the given value.
 *   Action `S` means to move south by the given value.
 *   Action `E` means to move east by the given value.
 *   Action `W` means to move west by the given value.
