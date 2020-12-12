@@ -13,6 +13,10 @@ use experimental 'lexical_subs';
 # Blog: https://wp.me/pcxd30-fJ
 #
 
+#
+# Challenge: ./challenge.md
+#
+
 my $input = shift // "input";
 open my $fh, "<", $input or die "open: $!";
 
