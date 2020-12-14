@@ -7,6 +7,10 @@ use warnings;
 no  warnings 'syntax';
 
 #
+# Blog: https://wp.me/pcxd30-hm
+#
+
+#
 # Challenge description: ./challenge.md
 #
 
