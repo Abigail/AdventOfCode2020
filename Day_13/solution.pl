@@ -42,7 +42,7 @@ foreach my $index (keys @ids) {
     my $waittime = $id - ($timestamp % $id);
     @min = ($waittime, $id) if $waittime < $min [0];
     #
-    # Create a "mod" of the index (+1) and the bus ID.
+    # Create a "mod" of the index and the bus ID.
     #
     push @mods => mod ($index, $id);
 }
