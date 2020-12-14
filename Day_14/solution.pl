@@ -43,9 +43,7 @@ sub addresses ($base_address, $mask) {
                    :  die "Unexpected mask bit ", $mask_bits [$_]}
                  keys @mask_bits;
 
-    my $pattern = join "" => @result;
-
-    map {eval "0b$_"} glob $pattern;
+    map {eval "0b$_"} glob join "" => @result;
 }
 
 #
