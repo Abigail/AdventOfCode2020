@@ -44,7 +44,7 @@ foreach my $index (keys @ids) {
     #
     # Create a "mod" of the index (+1) and the bus ID.
     #
-    push @mods => mod ($index + 1, $id);
+    push @mods => mod ($index, $id);
 }
 #
 # Get the result of applying the Chinese Remainder Theorem
@@ -52,7 +52,7 @@ foreach my $index (keys @ids) {
 my $m = cr_combine (@mods);
 
 say "Solution 1: ", $min [0] * $min [1];
-say "Solution 2: ", $m -> modulus - $m -> residue + 1;
+say "Solution 2: ", $m -> modulus - $m -> residue;
 
 
 __END__
