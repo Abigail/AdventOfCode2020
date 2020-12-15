@@ -23,14 +23,14 @@ open my $fh, "<", $input or die "open: $!";
 my @numbers = <$fh> =~ /[0-9]+/g;
 
 my $turn = 0;  # Turn counter.
-my %spoken;    # For each number, record the last time it was spoken.
+my @spoken;    # For each number, record the last time it was spoken.
                # Note we record up to "current turn - 2".
 
 #
 # Initialize; add all, but the last, number in %spoken.
 #
 foreach my $number (@numbers [0 .. $#numbers - 1]) {
-    $spoken {$number} = ++ $turn;
+    $spoken [$number] = ++ $turn;
 }
 $turn ++;
 
@@ -42,14 +42,14 @@ my $solution1;
 my $solution2;
 my $last_number = $numbers [-1];
 while ($turn < $TARGET2) {
-    my $new_number = $spoken {$last_number} ?
-             $turn - $spoken {$last_number} : 0;
+    my $new_number = $spoken [$last_number] ?
+             $turn - $spoken [$last_number] : 0;
 
     #
     # We can now update the last time we saw the previous number --
     # which was on the previous turn.
     #
-    $spoken {$last_number} = $turn ++;
+    $spoken [$last_number] = $turn ++;
 
     $last_number = $new_number;
     $solution1   = $new_number if $turn == $TARGET1;
