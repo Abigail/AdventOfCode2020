@@ -9,8 +9,15 @@ no  warnings 'syntax';
 use experimental 'signatures';
 use experimental 'lexical_subs';
 
-my $input = shift // "input";
+#
+# Blog: https://wp.me/pcxd30-hD
+#
 
+#
+# Challenge description: ./challenge.md
+#
+
+my $input = shift // "input";
 open my $fh, "<", $input or die "open: $!";
 
 my $mask_and = "1" x 36;
