@@ -10,6 +10,14 @@ use experimental 'signatures';
 use experimental 'lexical_subs';
 
 #
+# Blog: https://wp.me/pcxd30-ip
+#
+
+#
+# Challenge description: challenge.md
+#
+
+#
 # Given a set of ranges, return a sub which returns 1 if
 # a given value falls in one of the ranges -- 0 otherwise.
 #
