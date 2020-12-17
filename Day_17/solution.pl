@@ -21,6 +21,7 @@ package Universe {
 
     fieldhash my %universe;
     fieldhash my %dimension;
+    fieldhash my %offsets;
 
     #
     # Create an empty universe
@@ -36,41 +37,39 @@ package Universe {
         foreach my $x (keys @lines) {
             my @chars = split // => $lines [$x];
             foreach my $y (keys @chars) {
-                $self -> set_alive (join $; => $x, $y, 0,
-                                               $dimension == 4 ? (0) : ())
+                $self -> set_alive (join $; => $x, $y, (0) x ($dimension - 2))
                                 if $chars [$y] eq '#';
             }
         }
+
+        #
+        # Calculate the offsets for the neighbourhood.
+        #
+        my $pattern = join "," => ("{-1,0,1}") x $dimension;
+        foreach my $offset (glob $pattern) {
+            next unless $offset =~ /1/;
+            push @{$offsets {$self}} => [split /,/ => $offset];
+        }
+
         $self;
     }
 
 
     #
-    # Given a triple of coordinates, return all its neighbours
+    # Given a cell, return all its neighbours. We're using cache,
+    # for most cells, we will want the neighbourhood more than once.
     #
     sub neighbourhood ($self, $cell) {
-        my @out;
-        my $dimension = $dimension {$self};
-        my ($x, $y, $z, $w) = split $; => $cell;
-        for my $dx (-1 .. 1) {
-            for my $dy (-1 .. 1) {
-                for my $dz (-1 .. 1) {
-                    if ($dimension == 3) {
-                        next unless $dx || $dy || $dz;
-                        push @out => join $; => $x + $dx, $y + $dy, $z + $dz;
-                    }
-                    else {
-                        for my $dw (-1 .. 1) {
-                            next unless $dx || $dy || $dz || $dw;
-                            push @out => join $; => $x + $dx, $y + $dy,
-                                                    $z + $dz, $w + $dw;
-                        }
-                    }
-                }
-            }
-        }
-        @out;
+        state $cache;
+        @{$$cache {$cell} //= do {
+            my @coordinates = split $; => $cell;
+            [map {my $offset = $_;
+                  join $; => map {$coordinates [$_] +
+                                 $$offset [$_]} keys @$offset;
+            } @{$offsets {$self}}];
+        }}
     }
+
 
 
     #
