@@ -74,36 +74,12 @@ package Universe {
         }}
     }
 
-
-
     #
     # Set a particular cell alive
     #
     sub set_alive ($self, $cell) {
         $universe {$self} {$cell} = 1;
         $self;
-    }
-
-    #
-    # Returns true of the given cell is alive
-    #
-    sub is_alive ($self, $cell) {
-        $universe {$self} {$cell};
-    }
-
-
-    #
-    # Given a set of coordinates, return true if the cell
-    # at that location should be alive in the next generation.
-    # Return false otherwise.
-    #
-    sub will_live ($self, $cell) {
-        my $alive_neighbours = 0;
-        foreach my $neighbour ($self -> neighbourhood ($cell)) {
-            $alive_neighbours ++ if $self -> is_alive ($neighbour);
-        }
-        $alive_neighbours == 3 ||
-        $alive_neighbours == 2 && $self -> is_alive ($cell);
     }
 
     #
@@ -115,19 +91,27 @@ package Universe {
 
     #
     # Calculate the next generation.
+    #   - For each alive cell, add 1 to a count of each neighbour
+    #   - Afterwards, create a new universe by applying the rules:
+    #       - if a cell has a count of 3, it will be alive
+    #       - if a cell has a count of 2, it remains as is
+    #       - else, the cell will be dead.
     #
     sub tick ($self) {
-        my $new_universe;
-        my %done;
+        my $counts;
         foreach my $alive_cell ($self -> alive_cells) {
-            for my $cell ($alive_cell, $self -> neighbourhood ($alive_cell)) {
-                next if $done {$cell} ++;
-                my ($x, $y, $z) = split $; => $cell;
-                $$new_universe {$cell} = 1 if $self -> will_live ($cell);
+            foreach my $cell ($self -> neighbourhood ($alive_cell)) {
+                $$counts {$cell} ++;
             }
         }
-        $universe {$self} = $new_universe;
-        $self;
+        my $old_universe = $universe {$self};
+        my $new_universe;
+          $$new_universe {$_} = 1
+                for grep {$$counts {$_} == 3 ||
+                          $$counts {$_} == 2 && $$old_universe {$_}}
+                    keys  %$counts;
+       $universe {$self} = $new_universe;
+       $self;
     }
 }
 
