@@ -9,6 +9,10 @@ no  warnings 'syntax';
 use experimental 'signatures';
 use experimental 'lexical_subs';
 
+#
+# Challenge description: ./challenge.md
+#
+
 
 my $input = shift // "input";
 open my $fh, "<", $input or die "open: $!";
