@@ -63,16 +63,10 @@ my $pattern2 = qr /$pat2^(?&RULE_0)$/x;
 #
 # Count matches and report on them.
 #
-my $solution1 = 0;
-my $solution2 = 0;
-while (<$fh>) {
-    chomp;
-    $solution1 ++ if /$pattern1/;
-    $solution2 ++ if /$pattern2/;
-}
+chomp (my @lines = <$fh>);
 
-say "Solution 1: ", $solution1;
-say "Solution 2: ", $solution2;
+say "Solution 1: " . grep {/$pattern1/} @lines;
+say "Solution 2: " . grep {/$pattern2/} @lines;
 
 
 __END__
