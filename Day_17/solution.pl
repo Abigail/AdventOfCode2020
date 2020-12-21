@@ -25,7 +25,8 @@ package Universe {
 
     fieldhash my %universe;
     fieldhash my %dimension;
-    fieldhash my %offsets;
+
+    my %offsets;
 
     #
     # Create an empty universe
@@ -35,7 +36,7 @@ package Universe {
     #
     # Initialize
     #
-    sub init ($self, $dimension, $field) {
+    sub init ($self, $dimension, $field = "") {
         $dimension {$self} = $dimension;
         my @lines = split /\n/ => $field;
         foreach my $x (keys @lines) {
@@ -49,15 +50,23 @@ package Universe {
         #
         # Calculate the offsets for the neighbourhood.
         #
-        my $pattern = join "," => ("{-1,0,1}") x $dimension;
-        foreach my $offset (glob $pattern) {
-            next unless $offset =~ /1/;
-            push @{$offsets {$self}} => [split /,/ => $offset];
+        if (!$offsets {$dimension}) {
+            my $pattern = join "," => ("{-1,0,1}") x $dimension;
+            foreach my $offset (glob $pattern) {
+                next unless $offset =~ /1/;
+                push @{$offsets {$dimension}} => [split /,/ => $offset];
+            }
         }
 
         $self;
     }
 
+    #
+    # Return the dimension of the universe
+    #
+    sub dimension ($self) {
+        $dimension {$self}
+    }
 
     #
     # Given a cell, return all its neighbours. We're using cache,
@@ -70,7 +79,7 @@ package Universe {
             [map {my $offset = $_;
                   join $; => map {$coordinates [$_] +
                                  $$offset [$_]} keys @$offset;
-            } @{$offsets {$self}}];
+            } @{$offsets {$self -> dimension}}];
         }}
     }
 
@@ -90,7 +99,7 @@ package Universe {
     }
 
     #
-    # Calculate the next generation.
+    # Calculate the next generation, and return it.
     #   - For each alive cell, add 1 to a count of each neighbour
     #   - Afterwards, create a new universe by applying the rules:
     #       - if a cell has a count of 3, it will be alive
@@ -105,21 +114,21 @@ package Universe {
             }
         }
         my $old_universe = $universe {$self};
-        my $new_universe;
-          $$new_universe {$_} = 1
+
+        my $new_universe = Universe:: -> new -> init ($self -> dimension);
+           $new_universe -> set_alive ($_) 
                 for grep {$$counts {$_} == 3 ||
                           $$counts {$_} == 2 && $$old_universe {$_}}
                     keys  %$counts;
-       $universe {$self} = $new_universe;
-       $self;
+       $new_universe;
     }
 }
 
 my $universe3 = Universe:: -> new -> init (3, $field);
 my $universe4 = Universe:: -> new -> init (4, $field);
 
-   $universe3 -> tick for 1 .. $GENERATIONS;
-   $universe4 -> tick for 1 .. $GENERATIONS;
+   $universe3 = $universe3 -> tick for 1 .. $GENERATIONS;
+   $universe4 = $universe4 -> tick for 1 .. $GENERATIONS;
 
 say "Solution 1: ", scalar $universe3 -> alive_cells;
 say "Solution 2: ", scalar $universe4 -> alive_cells;
